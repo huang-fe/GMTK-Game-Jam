@@ -54,16 +54,10 @@ public class GridSpawner : MonoBehaviour
         return curr;
     }
 
-    public void selectCube(int index) 
+    public void editCube(int index) 
     {
-        allCubes[index].SetActive(true);
+        allCubes[index].SetActive(!allCubes[index].activeSelf);
         //allCubes[index].GetComponent<MeshRenderer>().enabled = true;
-    }
-
-    public void resetLast(int last)
-    {
-        // check tag
-        if (allCubes[index].activeSelf)
     }
 
     //void Update()

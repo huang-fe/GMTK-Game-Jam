@@ -11,16 +11,14 @@ public class EditLevel : MonoBehaviour
     int row = 45;
     private int index = 0;
     private int last = 0;
-    private bool lastWasActive = false;
+    GameObject lastCurrCube = null;
     private bool shiftDragged = false;
 
-    // Start is called before the first frame update
     void Start()
     {
         totalCubes = Spawner.allCubes.Count;
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.LeftShift))
@@ -65,10 +63,18 @@ public class EditLevel : MonoBehaviour
                 index += col;
             }
         }
-        Spawner.currCube(index);
-        if (last != index) // reset last
+        if (last != index)
         {
-            
+            if (!lastCurrCube)
+            {
+                Destroy(lastCurrCube);
+                lastCurrCube = null;
+            }
+            lastCurrCube = Spawner.currCube(index);
+            if (shiftDragged)
+            {
+                Spawner.editCube(index);
+            }
         }
     }
 }
