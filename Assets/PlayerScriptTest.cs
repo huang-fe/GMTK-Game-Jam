@@ -1,14 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Android;
 using static UnityEngine.ParticleSystem;
+using TMPro;
 
 public class PlayerScriptTest : MonoBehaviour
 {
     public EditLevel editor;
     float timeCount;
-    float force = 10f;
+    float force = 20f;
     float jumpForce = 20f;
     public Vector3 originalPos = new Vector3(0.5f, 0.5f, 0f);
     bool playing = true;
@@ -16,32 +18,59 @@ public class PlayerScriptTest : MonoBehaviour
     Rigidbody m_Rigidbody;
     ButtonsPressed[] mvmts;
 
+    public GameObject endUI;
+    public TMP_Text mode;
+
     void Start()
     {
         //Fetch the Rigidbody from the GameObject with this script attached
         m_Rigidbody = GetComponent<Rigidbody>();
         // right, jump, left, jump, right, jump, left, jump, right, jump left, jump right, right, jump, left, jump, left
         mvmts = new ButtonsPressed[] { new ButtonsPressed(false, false, false, 1.5f),
-            new ButtonsPressed(false, true, false, 1.2f), 
+            new ButtonsPressed(false, true, false, 1.0f), 
             new ButtonsPressed(false, false, true, 0.1f),
             new ButtonsPressed(false, false, false, 1.5f),
-            new ButtonsPressed(true, false, true, 0.6f), // left jump
-            new ButtonsPressed(true, false, false, 1.2f),
+            new ButtonsPressed(true, false, true, 0.2f), // left jump
+            new ButtonsPressed(true, false, false, 0.5f),
             new ButtonsPressed(false, false, false, 1.5f),
-            new ButtonsPressed(false, false, true, 0.1f),
-            new ButtonsPressed(false, true, false, 0.1f),
-            new ButtonsPressed(false, false, true, 0.1f),
-            new ButtonsPressed(true, false, false, 0.1f),
-            new ButtonsPressed(false, false, true, 0.1f),
-            new ButtonsPressed(false, true, false, 0.1f),
-            new ButtonsPressed(false, false, true, 0.1f),
-            new ButtonsPressed(true, false, false, 0.1f),
-            new ButtonsPressed(false, false, true, 0.1f)};
-    }
+            new ButtonsPressed(false, true, true, 0.3f),
+            new ButtonsPressed(false, false, false, 1.5f),
+            new ButtonsPressed(true, false, true, 0.3f),
+            new ButtonsPressed(false, false, false, 1.5f),
+            new ButtonsPressed(false, true, true, 0.3f),
+            new ButtonsPressed(false, false, false, 1.5f),
+            new ButtonsPressed(true, false, true, 0.3f),
+            new ButtonsPressed(false, false, false, 1.5f),
+            new ButtonsPressed(false, true, true, 0.3f), // jump right
+            new ButtonsPressed(false, false, false, 1.5f),
+            new ButtonsPressed(false, true, false, 0.5f),
+            new ButtonsPressed(false, false, false, 1.5f),
+            new ButtonsPressed(true, false, true, 0.4f), // jump left
+            new ButtonsPressed(false, false, false, 1.5f),
+            new ButtonsPressed(false, true, true, 0.3f), // jump right
+            new ButtonsPressed(false, false, false, 1.0f),
+            new ButtonsPressed(false, true, true, 0.3f), // jump right
+            new ButtonsPressed(false, false, false, 1.0f),
+            new ButtonsPressed(false, true, true, 0.3f), // jump right
+            new ButtonsPressed(false, false, false, 1.0f),
+            new ButtonsPressed(false, true, true, 0.3f), // jump right
+            new ButtonsPressed(false, false, false, 1.0f),
+            new ButtonsPressed(false, true, true, 0.3f), // jump right
+            new ButtonsPressed(false, false, false, 1.0f)
+
+        };
+
+        mode.text = "Mode: PLAYING";
+        //new ButtonsPressed(false, false, true, 0.1f),
+        //    new ButtonsPressed(false, true, false, 0.1f),
+        //    new ButtonsPressed(false, false, true, 0.1f),
+        //    new ButtonsPressed(true, false, false, 0.1f),
+        //    new ButtonsPressed(false, false, true, 0.1f)};
+}
 
     void FixedUpdate()
     {
-        if (playing)
+        if (playing && index < mvmts.Length)
         {
             timeCount += Time.deltaTime;
 
@@ -65,10 +94,10 @@ public class PlayerScriptTest : MonoBehaviour
             {
                 timeCount = 0;
                 index++;
-                if (index >= mvmts.Length)
-                {
-                    index = 0;
-                }
+                //if (index >= mvmts.Length)
+                //{
+                //    index = 0;
+                //}
             }
         }
     }
@@ -79,14 +108,24 @@ public class PlayerScriptTest : MonoBehaviour
         // nvm cant pause cuz we'd have to turn rigidbody kinematic anyways rip
         if (Input.GetKeyDown(KeyCode.Space)) // editing mode
         {
+            Component[] mr = GetComponentsInChildren<MeshRenderer>();
             if (playing)
             {
+                mode.text = "Mode: EDITING";
                 resetLvl(); 
                 playing = false;
+                GetComponent<MeshRenderer>().enabled = false;
+                foreach (MeshRenderer m in mr)
+                    m.enabled = false;
             } else // playing mode
             {
+                mode.text = "Mode: PLAYING";
                 index = 0;
                 playing = true;
+                transform.position = originalPos;
+                GetComponent<MeshRenderer>().enabled = true;
+                foreach (MeshRenderer m in mr)
+                    m.enabled = true;
             }
             editor.toggleEdit();
         }
@@ -94,9 +133,18 @@ public class PlayerScriptTest : MonoBehaviour
 
     void resetLvl()
     {
-        transform.position = originalPos;
+        //transform.position = originalPos;
+        //float t = 100.0f;
+        //while (t > 0.0f)
+        //{
+        //    t -= Time.deltaTime;
+        //}
+        //transform.position = originalPos;
         index = 0;
-        // reset index too
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        endUI.SetActive(true);
     }
 }
 
