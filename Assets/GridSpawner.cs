@@ -10,52 +10,74 @@ public class GridSpawner : MonoBehaviour
     private bool drag = false;
     private bool adding = true;
     private List<GameObject> allCubes = new List<GameObject>();
-    private List<GameObject> toAdd;
-    private List<GameObject> toRemove;
-    private List<GameObject> visibleCubes;
+    //private List<GameObject> toAdd;
+    //private List<GameObject> toRemove;
 
     void Start()
     {
         // spawn all grids. first cube at 0, 0, 0. 0 to 21.5, 0 to 13.75, 43 across, 
-        for (float x = 0; x < 21.5; x+=0.5f)
+        for (float x = 0; x < 22.5f; x+=0.5f)
         {
-            for (float y = 0; y < 13.5; y+=0.5f)
+            for (float y = 0; y < 13.5f; y+=0.5f)
             {
                 GameObject o = Instantiate(cube, new Vector3(x, y, 0), Quaternion.identity);
                 allCubes.Add(o);
+                o.GetComponent<MeshRenderer>().enabled = false; // invisible at start
             }
         }
+        hideAll();
         Debug.Log(allCubes.Count);
     }
 
-    void Update()
+    void hideAll()
     {
-        //if (Input.GetMouseButtonDown(0))
-        //{
-        //    drag = true;
-        //}
-        //if (Input.GetMouseButtonUp(0)) // end drag
-        //{
-        //    drag = false;
-        //    // add or remove all obj in lists, clear lists
-        //    if (toAdd.Count > 0)
-        //    {
-        //        foreach (GameObject go in toAdd) // display all cubes to add
-        //        {
-        //            go.GetComponent<MeshRenderer>().enabled = true;
-        //        }
-        //        toAdd.Clear();
-        //    }
-        //    if (toRemove.Count > 0)
-        //    {
-        //        foreach (GameObject go in toRemove) // display all cubes to add
-        //        {
-        //            go.GetComponent<MeshRenderer>().enabled = false;
-        //        }
-        //        toRemove.Clear();
-        //    }
-        //}
+        foreach (GameObject o in allCubes)
+        {
+            o.SetActive(false);
+        }
     }
+
+    public void onEditMode()
+    {
+        foreach (GameObject o in allCubes)
+        {
+            o.SetActive(true);
+        }
+    }
+
+    private void Update()
+    {
+        
+    }
+
+    //void Update()
+    //{
+    //if (Input.GetMouseButtonDown(0))
+    //{
+    //    drag = true;
+    //}
+    //if (Input.GetMouseButtonUp(0)) // end drag
+    //{
+    //    drag = false;
+    //    // add or remove all obj in lists, clear lists
+    //    if (toAdd.Count > 0)
+    //    {
+    //        foreach (GameObject go in toAdd) // display all cubes to add
+    //        {
+    //            go.GetComponent<MeshRenderer>().enabled = true;
+    //        }
+    //        toAdd.Clear();
+    //    }
+    //    if (toRemove.Count > 0)
+    //    {
+    //        foreach (GameObject go in toRemove) // display all cubes to add
+    //        {
+    //            go.GetComponent<MeshRenderer>().enabled = false;
+    //        }
+    //        toRemove.Clear();
+    //    }
+    //}
+    //}
 
     //private void OnCollisionEnter(Collision collision)
     //{
