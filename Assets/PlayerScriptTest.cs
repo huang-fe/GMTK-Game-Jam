@@ -49,7 +49,7 @@ public class PlayerScriptTest : MonoBehaviour
                 {
                     m_Rigidbody.AddForce(0, 20f, 0);
                 }
-                Debug.Log(timeCount);
+                //Debug.Log(timeCount);
             }
             else
             {
