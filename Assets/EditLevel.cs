@@ -12,82 +12,91 @@ public class EditLevel : MonoBehaviour
     private int last = 0;
     GameObject lastCurrCube = null;
     private bool shiftDragged = false;
+    bool allowEdit = false;
 
     void Start()
     {
         totalCubes = Spawner.allCubes.Count;
     }
 
+    public void toggleEdit()
+    {
+        allowEdit = !allowEdit;
+    }
+
     void Update()
     {
         // make selected glow, change back to previous state
         // when dragging, add or remove the current selected obj
-        if (Input.GetKeyDown(KeyCode.W))
+        if (allowEdit)
         {
-            if ((index + 1) % col != 0)
+            if (Input.GetKeyDown(KeyCode.W))
             {
-                last = index;
-                index++;
+                if ((index + 1) % col != 0)
+                {
+                    last = index;
+                    index++;
 
-                Debug.Log("index : " + index + " last = " + last);
+                    Debug.Log("index : " + index + " last = " + last);
+                }
             }
-        }
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            if (index >= col)
+            if (Input.GetKeyDown(KeyCode.A))
             {
-                last = index;
-                index -= col;
+                if (index >= col)
+                {
+                    last = index;
+                    index -= col;
 
-                Debug.Log("index : " + index + " last = " + last);
+                    Debug.Log("index : " + index + " last = " + last);
+                }
             }
-        }
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            if (index % 27 != 0)
+            if (Input.GetKeyDown(KeyCode.S))
             {
-                last = index;
-                index--;
+                if (index % 27 != 0)
+                {
+                    last = index;
+                    index--;
 
-                Debug.Log("index : " + index + " last = " + last);
+                    Debug.Log("index : " + index + " last = " + last);
+                }
             }
-        }
-        if (Input.GetKeyDown(KeyCode.D))
-        {
-            if (index < totalCubes - col)
+            if (Input.GetKeyDown(KeyCode.D))
             {
-                last = index;
-                index += col;
+                if (index < totalCubes - col)
+                {
+                    last = index;
+                    index += col;
 
-                Debug.Log("index : " + index + " last = " + last);
+                    Debug.Log("index : " + index + " last = " + last);
+                }
             }
-        }
 
-        if (Input.GetKeyDown(KeyCode.LeftShift))
-        {
-            shiftDragged = true;
-            Spawner.editCube(index);
-        }
-        if (Input.GetKeyUp(KeyCode.LeftShift))
-        {
-            shiftDragged = false;
-        }
-
-        if (last != index)
-        {
-            Debug.Log("index : " + index + " last = " + last);
-            if (lastCurrCube != null)
+            if (Input.GetKeyDown(KeyCode.LeftShift))
             {
-                Debug.Log("last " + lastCurrCube.ToString());
-                Destroy(lastCurrCube);
-                
-            }
-            lastCurrCube = Spawner.currCube(index);
-            if (shiftDragged)
-            {
+                shiftDragged = true;
                 Spawner.editCube(index);
             }
-            last = index;
+            if (Input.GetKeyUp(KeyCode.LeftShift))
+            {
+                shiftDragged = false;
+            }
+
+            if (last != index)
+            {
+                Debug.Log("index : " + index + " last = " + last);
+                if (lastCurrCube != null)
+                {
+                    Debug.Log("last " + lastCurrCube.ToString());
+                    Destroy(lastCurrCube);
+
+                }
+                lastCurrCube = Spawner.currCube(index);
+                if (shiftDragged)
+                {
+                    Spawner.editCube(index);
+                }
+                last = index;
+            }
         }
     }
 }
