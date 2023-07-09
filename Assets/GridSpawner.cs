@@ -8,12 +8,7 @@ public class GridSpawner : MonoBehaviour
 {
     public GameObject cube;
     public Material selectedMaterial;
-
-    //private bool drag = false;
-    //private bool adding = true;
     [HideInInspector] public List<GameObject> allCubes = new List<GameObject>();
-    //private List<GameObject> toAdd;
-    //private List<GameObject> toRemove;
 
     void Awake()
     {
@@ -30,22 +25,6 @@ public class GridSpawner : MonoBehaviour
         Debug.Log(allCubes.Count);
     }
 
-    void hideAll()
-    {
-        foreach (GameObject o in allCubes)
-        {
-            o.SetActive(false);
-        }
-    }
-
-    //public void onEditMode()
-    //{
-    //    foreach (GameObject o in allCubes)
-    //    {
-    //        o.SetActive(true);
-    //    }
-    //}
-
     // displays curr cube
     public GameObject currCube(int index)
     {
@@ -59,48 +38,4 @@ public class GridSpawner : MonoBehaviour
         allCubes[index].SetActive(!allCubes[index].activeSelf);
         //allCubes[index].GetComponent<MeshRenderer>().enabled = true;
     }
-
-    //void Update()
-    //{
-    //if (Input.GetMouseButtonDown(0))
-    //{
-    //    drag = true;
-    //}
-    //if (Input.GetMouseButtonUp(0)) // end drag
-    //{
-    //    drag = false;
-    //    // add or remove all obj in lists, clear lists
-    //    if (toAdd.Count > 0)
-    //    {
-    //        foreach (GameObject go in toAdd) // display all cubes to add
-    //        {
-    //            go.GetComponent<MeshRenderer>().enabled = true;
-    //        }
-    //        toAdd.Clear();
-    //    }
-    //    if (toRemove.Count > 0)
-    //    {
-    //        foreach (GameObject go in toRemove) // display all cubes to add
-    //        {
-    //            go.GetComponent<MeshRenderer>().enabled = false;
-    //        }
-    //        toRemove.Clear();
-    //    }
-    //}
-    //}
-
-    //private void OnCollisionEnter(Collision collision)
-    //{
-    //    if (collision.gameObject.tag == "grid" && drag)
-    //    {
-    //        if (adding)
-    //        {
-    //            toAdd.Add(collision.gameObject);
-    //        } else
-    //        {
-    //            toRemove.Add(collision.gameObject);
-    //        }
-
-    //    }
-    //}
 }

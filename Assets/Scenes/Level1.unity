@@ -919,6 +919,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cube: {fileID: 3062299416307591485, guid: 8797e2a680b492643a40e40d18eb4be2, type: 3}
+  selectedMaterial: {fileID: 2100000, guid: d2e945c8e559d7946a9c4ea60af72b40, type: 2}
   allCubes: []
 --- !u!4 &706517798
 Transform:

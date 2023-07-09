@@ -5,7 +5,6 @@ using UnityEngine;
 public class EditLevel : MonoBehaviour
 {
     public GridSpawner Spawner;
-    public Material selectedMaterial;
     int totalCubes;
     int col = 27;
     int row = 45;
@@ -37,6 +36,8 @@ public class EditLevel : MonoBehaviour
             {
                 last = index;
                 index++;
+
+                Debug.Log("index : " + index + " last = " + last);
             }
         }
         if (Input.GetKeyDown(KeyCode.A))
@@ -45,6 +46,8 @@ public class EditLevel : MonoBehaviour
             {
                 last = index;
                 index -= col;
+
+                Debug.Log("index : " + index + " last = " + last);
             }
         }
         if (Input.GetKeyDown(KeyCode.S))
@@ -53,6 +56,8 @@ public class EditLevel : MonoBehaviour
             {
                 last = index;
                 index--;
+
+                Debug.Log("index : " + index + " last = " + last);
             }
         }
         if (Input.GetKeyDown(KeyCode.D))
@@ -61,14 +66,18 @@ public class EditLevel : MonoBehaviour
             {
                 last = index;
                 index += col;
+
+                Debug.Log("index : " + index + " last = " + last);
             }
         }
         if (last != index)
         {
-            if (!lastCurrCube)
+            Debug.Log("index : " + index + " last = " + last);
+            if (lastCurrCube != null)
             {
+                Debug.Log("last " + lastCurrCube.ToString());
                 Destroy(lastCurrCube);
-                lastCurrCube = null;
+                
             }
             lastCurrCube = Spawner.currCube(index);
             if (shiftDragged)
