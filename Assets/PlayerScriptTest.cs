@@ -8,8 +8,8 @@ public class PlayerScriptTest : MonoBehaviour
 {
     public EditLevel editor;
     float timeCount;
-    float force = 20f;
-    float jumpForce = 50f;
+    float force = 10f;
+    float jumpForce = 20f;
     public Vector3 originalPos = new Vector3(0.5f, 0.5f, 0f);
     bool playing = true;
     int index = 0;
@@ -20,18 +20,23 @@ public class PlayerScriptTest : MonoBehaviour
     {
         //Fetch the Rigidbody from the GameObject with this script attached
         m_Rigidbody = GetComponent<Rigidbody>();
+        // right, jump, left, jump, right, jump, left, jump, right, jump left, jump right, right, jump, left, jump, left
         mvmts = new ButtonsPressed[] { new ButtonsPressed(false, false, false, 1.5f),
-            new ButtonsPressed(false, false, true, 0.1f), 
-            new ButtonsPressed(false, true, false, 1.0f),
+            new ButtonsPressed(false, true, false, 1.2f), 
             new ButtonsPressed(false, false, true, 0.1f),
-            new ButtonsPressed(false, true, false, 0.1f),
-            new ButtonsPressed(true, false, false, 1.0f),
+            new ButtonsPressed(false, false, false, 1.5f),
+            new ButtonsPressed(true, false, true, 0.6f), // left jump
+            new ButtonsPressed(true, false, false, 1.2f),
+            new ButtonsPressed(false, false, false, 1.5f),
             new ButtonsPressed(false, false, true, 0.1f),
             new ButtonsPressed(false, true, false, 0.1f),
             new ButtonsPressed(false, false, true, 0.1f),
             new ButtonsPressed(true, false, false, 0.1f),
             new ButtonsPressed(false, false, true, 0.1f),
-            new ButtonsPressed(true, false, false, 0.1f)};
+            new ButtonsPressed(false, true, false, 0.1f),
+            new ButtonsPressed(false, false, true, 0.1f),
+            new ButtonsPressed(true, false, false, 0.1f),
+            new ButtonsPressed(false, false, true, 0.1f)};
     }
 
     void FixedUpdate()
@@ -70,6 +75,7 @@ public class PlayerScriptTest : MonoBehaviour
 
     private void Update()
     {
+        transform.forward = new Vector3(0, 0, 1);
         // nvm cant pause cuz we'd have to turn rigidbody kinematic anyways rip
         if (Input.GetKeyDown(KeyCode.Space)) // editing mode
         {
