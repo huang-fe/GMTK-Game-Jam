@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -5,7 +6,8 @@ using UnityEngine;
 
 public class GridSpawner : MonoBehaviour
 {
-    public GameObject cube; 
+    public GameObject cube;
+    public Material selectedMaterial;
 
     //private bool drag = false;
     //private bool adding = true;
@@ -22,7 +24,6 @@ public class GridSpawner : MonoBehaviour
             {
                 GameObject o = Instantiate(cube, new Vector3(x, y, 0), Quaternion.identity);
                 allCubes.Add(o);
-                o.GetComponent<MeshRenderer>().enabled = false; // invisible at start
                 o.SetActive(false);
             }
         }
@@ -37,18 +38,32 @@ public class GridSpawner : MonoBehaviour
         }
     }
 
-    public void onEditMode()
+    //public void onEditMode()
+    //{
+    //    foreach (GameObject o in allCubes)
+    //    {
+    //        o.SetActive(true);
+    //    }
+    //}
+
+    // displays curr cube
+    public GameObject currCube(int index)
     {
-        foreach (GameObject o in allCubes)
-        {
-            o.SetActive(true);
-        }
+        GameObject curr = Instantiate(allCubes[index]);
+        curr.GetComponent<MeshRenderer>().material = selectedMaterial; 
+        return curr;
     }
 
-    // assumes is active before calling
-    public void selectCube(int index)
+    public void selectCube(int index) 
     {
-        allCubes[index].GetComponent<MeshRenderer>().enabled = true;
+        allCubes[index].SetActive(true);
+        //allCubes[index].GetComponent<MeshRenderer>().enabled = true;
+    }
+
+    public void resetLast(int last)
+    {
+        // check tag
+        if (allCubes[index].activeSelf)
     }
 
     //void Update()
