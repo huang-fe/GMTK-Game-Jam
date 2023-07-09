@@ -20,14 +20,6 @@ public class EditLevel : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.LeftShift))
-        {
-            shiftDragged = true;
-        }
-        if (Input.GetKeyUp(KeyCode.LeftShift))
-        {
-            shiftDragged = false;
-        }
         // make selected glow, change back to previous state
         // when dragging, add or remove the current selected obj
         if (Input.GetKeyDown(KeyCode.W))
@@ -70,6 +62,17 @@ public class EditLevel : MonoBehaviour
                 Debug.Log("index : " + index + " last = " + last);
             }
         }
+
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            shiftDragged = true;
+            Spawner.editCube(index);
+        }
+        if (Input.GetKeyUp(KeyCode.LeftShift))
+        {
+            shiftDragged = false;
+        }
+
         if (last != index)
         {
             Debug.Log("index : " + index + " last = " + last);
@@ -84,6 +87,7 @@ public class EditLevel : MonoBehaviour
             {
                 Spawner.editCube(index);
             }
+            last = index;
         }
     }
 }

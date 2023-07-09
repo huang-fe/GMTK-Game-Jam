@@ -30,6 +30,7 @@ public class GridSpawner : MonoBehaviour
     {
         GameObject curr = Instantiate(allCubes[index]);
         curr.GetComponent<MeshRenderer>().material = selectedMaterial; 
+        curr.SetActive(true);
         return curr;
     }
 
